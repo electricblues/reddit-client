@@ -4,28 +4,34 @@
 
 .article-preview {
   display: grid;
-  grid-template-columns: 2rem auto;
+  grid-template-columns: 3rem auto;
   grid-template-rows: 2rem auto 2rem;
   background-color: rgb(200, 221, 248);
 
+  border: 1px solid rgb(0, 0, 0, 0);
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &:hover {
+    @include border;
+    transform: translate(5px, -5px);
+    box-shadow: -5px 5px 0px rgba(0, 0, 0, 0.5);
+  }
+
   .sidebar {
-    @include border();
+    text-align: center;
     grid-column: 1 / 2;
     grid-row: 1 / 4;
   }
   .topBar {
-    @include border();
     grid-column: 2 / 3;
     grid-row: 1 / 2;
   }
   .bottomBar {
-    @include border();
     grid-column: 2 / 3;
     grid-row: 3 / 4;
   }
 
   .content {
-    @include border();
     grid-column: 2 / 3;
     grid-row: 2 / 3;
   }

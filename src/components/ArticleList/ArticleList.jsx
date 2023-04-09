@@ -8,17 +8,15 @@ export const ArticleList = () => {
 
   useEffect(() => {
     getPopularPosts().then((res) => {
-      setArticles(res.data.children);
+      setArticles(res.data.children.map((el) => el.data));
     });
   }, []);
 
   return (
     <div className="article-list">
-      <div>
-        {articles.map((article, index) => (
-          <ArticlePreview key={`article-${index}`} article={article.data} />
-        ))}
-      </div>
+      {articles.map((article, index) => (
+        <ArticlePreview key={`article-${index}`} article={article} />
+      ))}
     </div>
   );
 };
