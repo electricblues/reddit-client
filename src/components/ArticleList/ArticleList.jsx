@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 
 import { ArticlePreview } from "../ArticlePreview/ArticlePreview";
-import { getPopularPosts } from "../../util";
+import { getPopularPosts } from "../../fetches";
 
-export const ArticleList = () => {
+import "./ArticleList.scss";
+
+export const ArticleList = ({ searchTerm }) => {
   const [articles, setArticles] = useState([]);
+  const [filteredArticles, setFilteredArticles] = useState([]);
 
   useEffect(() => {
     getPopularPosts().then((res) => {
@@ -12,9 +15,21 @@ export const ArticleList = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredArticles(articles);
+    } else {
+      setFilteredArticles(
+        articles.filter((article) =>
+          article.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    }
+  }, [searchTerm, articles]);
+
   return (
     <div className="article-list">
-      {articles.map((article, index) => (
+      {filteredArticles.map((article, index) => (
         <ArticlePreview key={`article-${index}`} article={article} />
       ))}
     </div>
